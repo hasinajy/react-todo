@@ -7,14 +7,19 @@ export default function App() {
 
             <hr />
 
-            <form className="new-task">
-                <label htmlFor="task" className="new-task__label">Task:</label>
-                <input type="text" name="task" id="task" className="new-task__input" />
-                <button className="new-task__add btn">Add</button>
-            </form>
-
+            <TaskForm />
             <TaskList taskList={taskList} />
         </>
+    );
+}
+
+function TaskForm() {
+    return (
+        <form className="new-task">
+            <label htmlFor="task" className="new-task__label">Task:</label>
+            <input type="text" name="task" id="task" className="new-task__input" />
+            <button className="new-task__add btn">Add</button>
+        </form>
     );
 }
 
