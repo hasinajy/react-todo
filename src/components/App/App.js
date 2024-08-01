@@ -1,27 +1,42 @@
 import React, { useCallback, useContext, useState } from "react";
 
 const HandleCreateTaskContext = React.createContext();
+const HandleDeleteTaskContext = React.createContext();
 
 export default function App() {
-    const [taskList, setTaskList] = useState(null);
+    const [taskList, setTaskList] = useState([]);
+
+    const taskComponentList = taskList.map((task, taskId) => {
+        return (
+            <Task key={taskId} label={task} onDeleteTask={() => { handleDeleteTask(taskId); }} />
+        );
+    })
 
     const handleCreateTask = useCallback(() => {
-        const tempTaskList = (taskList === null) ? [] : taskList.slice();
+        const tempTaskList = taskList.slice();
         const taskInput = document.getElementById("task");
 
-        tempTaskList.push(<Task key={tempTaskList.length} label={taskInput.value} />);
+        tempTaskList.push(taskInput.value);
         setTaskList(tempTaskList);
     }, [taskList]);
 
+    const handleDeleteTask = useCallback((taskId) => {
+        const tempTaskList = taskList.slice();
+        tempTaskList.splice(taskId, 1);
+
+        setTaskList(tempTaskList);
+    }, [taskList]);
 
     return (
         <HandleCreateTaskContext.Provider value={handleCreateTask}>
-            <PageHeading title={"React Todo"} />
+            <HandleDeleteTaskContext.Provider value={handleDeleteTask}>
+                <PageHeading title={"React Todo"} />
 
-            <hr />
+                <hr />
 
-            <TaskForm />
-            <TaskList taskList={taskList} />
+                <TaskForm />
+                <TaskList taskList={taskComponentList} />
+            </HandleDeleteTaskContext.Provider>
         </HandleCreateTaskContext.Provider>
     );
 }
@@ -52,12 +67,12 @@ function TaskList({ taskList }) {
     );
 }
 
-function Task({ label }) {
+function Task({ label, onDeleteTask }) {
     return (
         <li className="task-list__task">
             <input type="checkbox" className="task__checkbox" />
             <span className="task__name">{label}</span>
-            <button className="task__delete btn">Delete</button>
+            <button className="task__delete btn" onClick={onDeleteTask}>Delete</button>
         </li>
     );
 }
