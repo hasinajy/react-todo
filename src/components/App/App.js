@@ -3,13 +3,19 @@ export default function App() {
 
     return (
         <>
-            <h1 className="page-heading">React todo</h1>
+            <PageHeading title={"React Todo"} />
 
             <hr />
 
             <TaskForm />
             <TaskList taskList={taskList} />
         </>
+    );
+}
+
+function PageHeading({ title }) {
+    return (
+        <h1 className="page-heading">{title}</h1>
     );
 }
 
