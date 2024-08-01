@@ -1,4 +1,6 @@
 export default function App() {
+    const taskList = [<Task key={0} label={"First task"} />, <Task key={1} label={"Second task"} />];
+
     return (
         <>
             <h1 className="page-heading">React todo</h1>
@@ -11,10 +13,16 @@ export default function App() {
                 <button className="new-task__add btn">Add</button>
             </form>
 
-            <ul className="task-list container">
-                <Task label={"Do something fun today"} />
-            </ul>
+            <TaskList taskList={taskList} />
         </>
+    );
+}
+
+function TaskList({ taskList }) {
+    return (
+        <ul className="task-list container">
+            {taskList}
+        </ul>
     );
 }
 
