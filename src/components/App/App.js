@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useState } from "react";
+import { v4 as uuid } from "uuid";
 
 const HandleCreateTaskContext = React.createContext();
 const HandleDeleteTaskContext = React.createContext();
@@ -9,7 +10,7 @@ export default function App() {
 
     const taskComponentList = taskList.map((task, taskId) => {
         return (
-            <Task key={taskId} label={task} onCheckTask={() => { handleCheckTask(taskId); }} onDeleteTask={() => { handleDeleteTask(taskId); }} />
+            <Task key={task.id} label={task.label} onCheckTask={() => { handleCheckTask(taskId); }} onDeleteTask={() => { handleDeleteTask(taskId); }} />
         );
     })
 
@@ -17,7 +18,7 @@ export default function App() {
         const tempTaskList = taskList.slice();
         const taskInput = document.getElementById("task");
 
-        tempTaskList.push(taskInput.value);
+        tempTaskList.push({ id: uuid(), label: taskInput.value });
         setTaskList(tempTaskList);
     }, [taskList]);
 
