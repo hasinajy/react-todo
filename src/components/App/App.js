@@ -5,10 +5,11 @@ const HandleDeleteTaskContext = React.createContext();
 
 export default function App() {
     const [taskList, setTaskList] = useState([]);
+    const [checkedTaskList, setCheckedTaskList] = useState([]);
 
     const taskComponentList = taskList.map((task, taskId) => {
         return (
-            <Task key={taskId} label={task} onDeleteTask={() => { handleDeleteTask(taskId); }} />
+            <Task key={taskId} label={task} onCheckTask={() => { handleCheckTask(taskId); }} onDeleteTask={() => { handleDeleteTask(taskId); }} />
         );
     })
 
@@ -19,6 +20,18 @@ export default function App() {
         tempTaskList.push(taskInput.value);
         setTaskList(tempTaskList);
     }, [taskList]);
+
+    const handleCheckTask = useCallback((taskId) => {
+        const tempTaskList = taskList.slice();
+        const tempCheckedTaskList = checkedTaskList.slice();
+
+        tempCheckedTaskList.push(tempTaskList[taskId]);
+        tempTaskList.splice(taskId, 1);
+
+        setTaskList(tempTaskList);
+        setCheckedTaskList(tempCheckedTaskList);
+
+    }, [taskList, checkedTaskList]);
 
     const handleDeleteTask = useCallback((taskId) => {
         const tempTaskList = taskList.slice();
@@ -67,10 +80,10 @@ function TaskList({ taskList }) {
     );
 }
 
-function Task({ label, onDeleteTask }) {
+function Task({ label, onCheckTask, onDeleteTask }) {
     return (
         <li className="task-list__task">
-            <input type="checkbox" className="task__checkbox" />
+            <input type="checkbox" className="task__checkbox" onChange={onCheckTask} />
             <span className="task__name">{label}</span>
             <button className="task__delete btn" onClick={onDeleteTask}>Delete</button>
         </li>
