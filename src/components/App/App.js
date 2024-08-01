@@ -12,12 +12,18 @@ export default function App() {
             </form>
 
             <ul className="task-list container">
-                <li className="task-list__task">
-                    <input type="checkbox" className="task__checkbox" />
-                    <span className="task__name">Do something fun today</span>
-                    <button className="task__delete btn">Delete</button>
-                </li>
+                <Task label={"Do something fun today"} />
             </ul>
         </>
+    );
+}
+
+function Task({ label }) {
+    return (
+        <li className="task-list__task">
+            <input type="checkbox" className="task__checkbox" />
+            <span className="task__name">{label}</span>
+            <button className="task__delete btn">Delete</button>
+        </li>
     );
 }
