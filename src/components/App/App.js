@@ -50,6 +50,14 @@ export default function App() {
 
                 <TaskForm />
                 <TaskList taskList={taskComponentList} />
+
+                <hr />
+
+                <PageHeading title={"Checked tasks"} />
+
+                <hr />
+
+                <TaskList taskList={taskComponentList} />
             </HandleDeleteTaskContext.Provider>
         </HandleCreateTaskContext.Provider>
     );
