@@ -14,6 +14,12 @@ export default function App() {
         );
     })
 
+    const checkedTaskComponentList = checkedTaskList.map((task, taskId) => {
+        return (
+            <Task key={task.id} label={task.label} />
+        );
+    });
+
     const handleCreateTask = useCallback(() => {
         const tempTaskList = taskList.slice();
         const taskInput = document.getElementById("task");
@@ -57,7 +63,7 @@ export default function App() {
 
                 <hr />
 
-                <TaskList taskList={taskComponentList} />
+                <TaskList taskList={checkedTaskComponentList} />
             </HandleDeleteTaskContext.Provider>
         </HandleCreateTaskContext.Provider>
     );
