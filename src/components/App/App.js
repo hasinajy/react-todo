@@ -16,7 +16,7 @@ export default function App() {
 
     const checkedTaskComponentList = checkedTaskList.map((task, taskId) => {
         return (
-            <Task key={task.id} label={task.label} isChecked={true} />
+            <Task key={task.id} label={task.label} isChecked={true} onCheckTask={() => { handleUncheckTask(taskId) }} />
         );
     });
 
@@ -39,6 +39,17 @@ export default function App() {
         setCheckedTaskList(tempCheckedTaskList);
 
     }, [taskList, checkedTaskList]);
+
+    const handleUncheckTask = useCallback((taskId) => {
+        const tempCheckedTaskList = checkedTaskList.slice();
+        const tempTaskList = taskList.slice();
+
+        tempTaskList.push(tempCheckedTaskList[taskId]);
+        tempCheckedTaskList.splice(taskId, 1);
+
+        setCheckedTaskList(tempCheckedTaskList);
+        setTaskList(tempTaskList);
+    }, [checkedTaskList]);
 
     const handleDeleteTask = useCallback((taskId) => {
         const tempTaskList = taskList.slice();
@@ -100,9 +111,7 @@ function Task({ isChecked = false, label, onCheckTask, onDeleteTask }) {
         <li className="task-list__task">
             <input type="checkbox" className="task__checkbox" onChange={onCheckTask} checked={isChecked} />
 
-            {(isChecked) ? <del className="task__name">{label}</del> : <span className="task__name">{label}</span>}
-
-            <button className="task__delete btn" onClick={onDeleteTask}>Delete</button>
+            {(isChecked) ? <del className="task__name">{label}</del> : <span className="task__name">{label} <button className="task__delete btn" onClick={onDeleteTask}>Delete</button></span>}
         </li>
     );
 }
