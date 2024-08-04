@@ -16,7 +16,7 @@ export default function App() {
 
     const checkedTaskComponentList = checkedTaskList.map((task, taskId) => {
         return (
-            <Task key={task.id} label={task.label} />
+            <Task key={task.id} label={task.label} isChecked={true} />
         );
     });
 
@@ -95,11 +95,13 @@ function TaskList({ taskList }) {
     );
 }
 
-function Task({ label, onCheckTask, onDeleteTask }) {
+function Task({ isChecked = false, label, onCheckTask, onDeleteTask }) {
     return (
         <li className="task-list__task">
-            <input type="checkbox" className="task__checkbox" onChange={onCheckTask} />
-            <span className="task__name">{label}</span>
+            <input type="checkbox" className="task__checkbox" onChange={onCheckTask} checked={isChecked} />
+
+            {(isChecked) ? <del className="task__name">{label}</del> : <span className="task__name">{label}</span>}
+
             <button className="task__delete btn" onClick={onDeleteTask}>Delete</button>
         </li>
     );
