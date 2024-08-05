@@ -30,7 +30,7 @@ cd react-todo
 # Install all dependencies
 npm install
 
-# Run the game
+# Run the app
 npm start
 ```
 ## Contributing
