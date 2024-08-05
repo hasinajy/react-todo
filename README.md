@@ -1,7 +1,6 @@
 # React Todo App
 
-This is a simple todo app in React that implements the very basic features of what a todo app requires.
-
+This is a simple todo app in React that implements the very basic features of what a todo app requires.<br />
 The project is functional for those who like minimalistic UI and just needs a list of the tasks they need to get done.
 
 ## Screenshot
@@ -30,7 +29,7 @@ cd react-todo
 # Install all dependencies
 npm install
 
-# Run the game
+# Run the app
 npm start
 ```
 ## Contributing
